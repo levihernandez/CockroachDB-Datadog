@@ -153,6 +153,8 @@ export NODE=node_1; export JOIN=master,${NODE}; docker-compose --verbose up
 ```commandline
 (venv) jlhernandez $ python project/backend/data_emulator/main.py 
 ```
+> Appli database load via API with Postman
+![Postman API](images/postman-api.png)
 > Scale up the CockroachDB cluster to 5 nodes
 ```commandline
 export NODE=node_5; export JOIN=master,node_1,node_2,node_3,node_4,${NODE}; docker-compose scale node=5
@@ -210,7 +212,11 @@ root@localhost:26257/defaultdb> quit
 (venv) jlhernandez $ python manage.py runserver 0:3000
 ```
 
+> Frontend user interaction with the Northwind data set
 ![Northwind Django](images/northwind-django.png)
+
+> CockroachDB databases
+![CRDB Databases](images/crdb_db_list.png)
 
 ### Datadog Monitoring Test
 
@@ -234,3 +240,7 @@ DD_SERVICE="api" DD_ENV="cockroach-sandbox" DD_LOGS_INJECTION=true ddtrace-run p
 > Full CockroachDB observability with Datadog Single Pane of Glass Dashboard
 
 ![CRDB+DD+Django Tracing](images/crdb_dd-dashboard.png)
+
+## Summary
+
+Datadog's full unified observability and Cockroach Labs high availability are a strong set of solutions to quickly scale up and understand the correlation of each business unit processed, this brings quick MTTD, MTTR, availability, resilience, and many more benefits for businesses in need of quick growth.

@@ -1,0 +1,99 @@
+version: "3.9"
+services:
+
+  master:
+    # Start with a DB node
+    # container_name: node_1
+    image: cockroachdb/cockroach:latest
+    environment:
+      DATADOG_HOST: 'datadog'
+    volumes:
+      - ./data/master:/cockroach/cockroach-data
+      - ./monitor/cockroachdb/channels.yaml:/cockroach/channels.yaml
+    command: start-single-node --insecure
+    ports:
+      - "26257:26257"
+      - "8080:8080"
+    labels:
+      #com.datadoghq.ad.logs: '[{"source":"cockroachdb","service":"cockroach"}]'
+      com.datadoghq.ad.logs: '[{"type":"file", "source": "cockroachdb", "service": "database", "path": "/cockroach/cockroach-data/logs/cockroach.log"},{"type":"file", "source": "cockroachdb", "service": "database", "path": "/cockroach/cockroach-data/logs/cockroach-ops.log"}]'
+      com.datadoghq.ad.check_names: '["cockroachdb"]'
+      com.datadoghq.ad.init_configs: '[{}]'
+      com.datadoghq.ad.instances: '[{"prometheus_url":"http://%%host%%:8080/_status/vars"}]'
+      #com.datadoghq.ad.instances: '[{"prometheus_url":"http://localhost:8080/_status/vars"}]'
+    networks:
+      - poc
+
+  node:
+    # Add DB node and inject variable for new nodes
+    # container_name: ${NODE}
+    image: cockroachdb/cockroach:latest
+    environment:
+      DATADOG_HOST: 'datadog'
+    #deploy:
+    #  replicas: 2
+    volumes:
+      - ./data/${NODE}:/cockroach/cockroach-data
+      - ./monitor/cockroachdb/channels.yaml:/cockroach/channels.yaml
+    command: start --insecure --listen-addr=localhost --join=${JOIN}
+    labels:
+      #com.datadoghq.ad.logs: '[{"source":"cockroachdb","service":"cockroach"}]'
+      com.datadoghq.ad.logs: '[{"type":"file", "source": "cockroachdb", "service": "database", "path": "/cockroach/cockroach-data/logs/cockroach.log"},{"type":"file", "source": "cockroachdb", "service": "database", "path": "/cockroach/cockroach-data/logs/cockroach-ops.log"}]'
+      com.datadoghq.ad.check_names: '["cockroachdb"]'
+      com.datadoghq.ad.init_configs: '[{}]'
+      #com.datadoghq.ad.instances: '[{"prometheus_url":"http://%%host%%:8080/_status/vars"}]'
+      com.datadoghq.ad.instances: '[{"prometheus_url":"http://docker-desktop:8080/_status/vars"}]'
+    networks:
+      - poc
+
+
+  # agent section: name of the service 'datadog' is also the value of docker-compose.yaml 'environment DATADOG_HOST: "datadog'
+  datadog:
+    #build: datadog
+    image: datadog/agent
+    # user: "dd-agent:root"
+    links:
+      - master
+      - node
+    environment:
+      - DD_SITE=datadoghq.com # AWS East (us1=datadoghq.com), AZ West (us3=us3.datadoghq.com), GCP US West (us5=us5.datadoghq.com), GCP EU (eu1=eu1.datadoghq.com)
+      - DD_API_KEY=${DD_API_KEY} # Datadog API Key, set it as '- DD_APY_KEY=${DD_API_KEY}' to get val from env 'export DD_API_KEY=<DD-API-KEY>'
+      - DD_ENV=sandbox  # Name of the current environment (sandbox, qa, uat, prod, etc)
+      - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true # Statsd to Dogstatsd metrics
+      - DD_APM_ENABLED=true # Enable APM tracing
+      - DD_APM_NON_LOCAL_TRAFFIC=true # Enable/include tracing from other containers
+      - DD_SYSTEM_PROBE_ENABLED=true  # Enable Network Perf collection from system probe, additional settings required for cap_add (may not be compatible with MacOS)
+      - DD_PROCESS_AGENT_ENABLED=true # Enable collection of container app/processes
+      - DD_LOGS_ENABLED=true  # Enable log collection
+      - DD_LOGS_INJECTION=true  # Enable the connectiong of APM traces with Logs
+      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true # All Logs are collected for container via stderr/stdout
+      - DD_LOGS_CONFIG_DOCKER_CONTAINER_USE_FILE=true   # Enable container file logs collection with the use of labels 'com.datadoghq.ad.logs'
+      - DD_RUNTIME_SECURITY_CONFIG_ENABLED=true # Enable collection of container security audit
+    volumes:
+      # - ./monitor/datadog/system-probe.yaml:/etc/datadog-agent/system-probe.yaml:rw
+      # - ./monitor/datadog/cockroachdb.yaml:/etc/datadog-agent/conf.d/cockroachdb.d/conf.yaml:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro  # Required for the docker guest(container)/host interaction
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+      - /sys/kernel/debug:/sys/kernel/debug # Used for Network Performance data collection, might not be compatible with MacOS
+      - /etc/passwd:/etc/passwd:ro  # Container Security, Linux, accounts in the Guest OS
+      - /etc/group:/etc/group:ro  # Container Security, Linux, groups in the Guest OS
+      - /:/host/root:ro # Container Security, Linux, root dir
+      # - /etc/os-release:/etc/os-release # Container Security, Linux, OS Release version (MacOS incompatible)
+    cap_add:
+      - SYS_ADMIN
+      - SYS_RESOURCE
+      - SYS_PTRACE
+      - NET_ADMIN
+      - NET_BROADCAST
+      - NET_RAW
+      - IPC_LOCK
+      - CHOWN
+    security_opt:
+      - apparmor:unconfined
+    networks:
+      - poc
+
+networks:
+  poc:
+    driver: bridge

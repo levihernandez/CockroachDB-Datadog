@@ -106,10 +106,15 @@ The excerpt for the docker-compose.yaml for Datadog looks like the example below
       - DD_API_KEY=${DD_API_KEY}
 ```
 
+
 ### Database load script
 
 Before getting started with stress testing of the CockroachDB cluster, we will use the following Python script that emits fake requests to insert new users into the database. Here is the breakdown of what the script accomplishes:
 
+* Declare the connection url for the DB cluster via an env variable (used by Django):
+```commandline
+export DATABASE_URL="postgresql://root@localhost:26257/northwind?sslmode=disable"
+```
 * Random generate users based on the `Faker` Python module package, which provides random user data such as:
 ```python
 >> faker.user_name(), faker.user_agent()
@@ -136,12 +141,70 @@ To test the capabilities of CockroachDB, there are a few samples provided by Coc
 
 For our demo purposes, I have configured the following docker-compose.yaml file to test the `Elastic Scale` of the architecture. To get started, lets breakdown our approach:
 
-> Spin up a small CockroachDB cluster
-> Apply database load
-> Scale up the CockroachDB cluster
-> Scale down the CockroachDB cluster
+* Run the initial deployment, then add nodes in the following order:
+    * Master
+    * Node 1
 
-### Frontend: Northwind Django app
+> Spin up a small CockroachDB cluster
+```commandline
+export NODE=node_1; export JOIN=master,${NODE}; docker-compose --verbose up
+```
+> Apply database load
+```commandline
+(venv) jlhernandez $ python project/backend/data_emulator/main.py 
+```
+> Scale up the CockroachDB cluster to 5 nodes
+```commandline
+export NODE=node_5; export JOIN=master,node_1,node_2,node_3,node_4,${NODE}; docker-compose scale node=5
+```
+> Scale down the CockroachDB cluster to 3 nodes
+```commandline
+export NODE=node_2; export JOIN=master,node_1,${NODE}; docker-compose scale node=2
+```
+The approach taken with docker-compose is for testing purposes and are not fit for a production workload.
+
+> CockroachDB Console Metrics
+![CockroachDB Console](images/crdb_console.png)
+
+Results: CockroachDB shows the Elastic Scaling by providing a High Availability cluster to ensure no downtime  and no data loss is experienced via the un-killable design. 
+
+### Backend/Frontend: Northwind Django app
+
+* With the northwind.sql file, run it in CrockroachDB to seed the DB.
+* Use Django migrate to infer the crm/models.py
+* Use Django Builder to auto generate the front end views, forms, api, serializers, urls, and admin Django files
+* Force a fake migration in Django to bypass creating a new structure from Django
+
+* Testing the connection from Django to CockroachDB cluster
+
+```sqlite-psql
+(venv) jlhernandez $ python manage.py dbshell
+#
+# Welcome to the CockroachDB SQL shell.
+# All statements must be terminated by a semicolon.
+# To exit, type: \q.
+#
+# Server version: CockroachDB CCL v21.2.4 (x86_64-unknown-linux-gnu, built 2022/01/10 18:50:15, go1.16.6) (same version as client)
+# Cluster ID: f6c68cb8-971e-4710-afbd-dc07d6d414d3
+#
+# Enter \? for a brief introduction.
+#
+root@localhost:26257/defaultdb> show databases;
+  database_name | owner | primary_region | regions | survival_goal
+----------------+-------+----------------+---------+----------------
+  defaultdb     | root  | NULL           | {}      | NULL
+  northwind     | root  | NULL           | {}      | NULL
+  postgres      | root  | NULL           | {}      | NULL
+  system        | node  | NULL           | {}      | NULL
+(4 rows)
+
+
+Time: 11ms total (execution 9ms / network 2ms)
+
+root@localhost:26257/defaultdb> quit
+```
+
+> Starting the Django App
 
 ```commandline
 (venv) jlhernandez $ python manage.py runserver 0:3000
@@ -151,6 +214,23 @@ For our demo purposes, I have configured the following docker-compose.yaml file 
 
 ### Datadog Monitoring Test
 
+The objective of achieving full observability with Datadog are to ensure all data points are in a single context with correlated tags. The time to value is obtained by integrating Datadog with CockroachDB and obtain metrics from the database as well as the architecture in which it runs.
+
+Within the Datadob platform, any CockroachDB user should be able to quickly understand the performance of the database, the elastic scalability as loads need to grow or decrease, and obtain ML analysis when a node dies, patterns are anomalous, and finally reduce false alert notifications. The core data obtained by Datadog ranges from Host & DB Logs, Network flow, Infra metrics, Live process, Database metrics, App traces for a 360 degree observability and single pane of glass.
+
 > Tracing Django application + CockroachDB calls with Datadog APM
 
+In general, tracing in Django is achieved with the following command:
+```commandline
+DD_SERVICE="api" DD_ENV="cockroach-sandbox" DD_LOGS_INJECTION=true ddtrace-run python3 manage.py runserver 0.0.0.0:8000
+```
+
 ![CRDB+DD+Django Tracing](images/crdb_dd-flamegraph.png) 
+
+> Tracing Django application + CockroachDB calls with Datadog APM Service Map
+ 
+![CRDB+DD+Django Tracing](images/dd_service_map.png)
+
+> Full CockroachDB observability with Datadog Single Pane of Glass Dashboard
+
+![CRDB+DD+Django Tracing](images/crdb_dd-dashboard.png)

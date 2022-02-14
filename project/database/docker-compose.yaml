@@ -34,7 +34,7 @@ services:
     #  replicas: 2
     volumes:
       - ./data/${NODE}:/cockroach/cockroach-data
-      - ./monitor/cockroachdb/channels.yaml:/cockroach/channels.yaml
+      #- ./monitor/cockroachdb/channels.yaml:/cockroach/channels.yaml
     command: start --insecure --listen-addr=localhost --join=${JOIN}
     labels:
       #com.datadoghq.ad.logs: '[{"source":"cockroachdb","service":"cockroach"}]'

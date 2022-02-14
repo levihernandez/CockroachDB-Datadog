@@ -158,6 +158,9 @@ export NODE=node_1; export JOIN=master,${NODE}; docker-compose --verbose up
 > Apply a database load via API with Postman
 ![Postman API](images/postman-api.png)
 
+The Django API receives Postman batch calls and hits different endpoints.
+![Django Rest API](images/django-rest-api.png)
+
 > Scale up the CockroachDB cluster to 5 nodes
 ```commandline
 export NODE=node_5; export JOIN=master,node_1,node_2,node_3,node_4,${NODE}; docker-compose scale node=5

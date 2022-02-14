@@ -149,20 +149,25 @@ For our demo purposes, I have configured the following docker-compose.yaml file 
 ```commandline
 export NODE=node_1; export JOIN=master,${NODE}; docker-compose --verbose up
 ```
+
 > Apply a database load via the Python emulator
 ```commandline
 (venv) jlhernandez $ python project/backend/data_emulator/main.py 
 ```
+
 > Apply a database load via API with Postman
 ![Postman API](images/postman-api.png)
+
 > Scale up the CockroachDB cluster to 5 nodes
 ```commandline
 export NODE=node_5; export JOIN=master,node_1,node_2,node_3,node_4,${NODE}; docker-compose scale node=5
 ```
+
 > Scale down the CockroachDB cluster to 3 nodes
 ```commandline
 export NODE=node_2; export JOIN=master,node_1,${NODE}; docker-compose scale node=2
 ```
+
 The approach taken with docker-compose is for testing purposes and are not fit for a production workload.
 
 > CockroachDB Console Metrics
@@ -207,7 +212,6 @@ root@localhost:26257/defaultdb> quit
 ```
 
 > Starting the Django App
-
 ```commandline
 (venv) jlhernandez $ python manage.py runserver 0:3000
 ```
@@ -234,11 +238,9 @@ DD_SERVICE="api" DD_ENV="cockroach-sandbox" DD_LOGS_INJECTION=true ddtrace-run p
 ![CRDB+DD+Django Tracing](images/crdb_dd-flamegraph.png) 
 
 > Tracing Django application + CockroachDB calls with Datadog APM Service Map
- 
 ![CRDB+DD+Django Tracing](images/dd_service_map.png)
 
 > Full CockroachDB observability with Datadog Single Pane of Glass Dashboard
-
 ![CRDB+DD+Django Tracing](images/crdb_dd-dashboard.png)
 
 ## Summary

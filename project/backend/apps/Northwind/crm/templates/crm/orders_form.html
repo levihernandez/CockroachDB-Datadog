@@ -1,0 +1,62 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'crm_Orders_list' %}">
+    Orders Listing
+    </a>
+</p>
+    
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{form.errors}}
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="order_id">order_id: </label>
+  <input class="form-control col-sm-10" id="order_id" type="text" name="order_id" value="{{ object.order_id }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="order_date">order_date: </label>
+  <input class="form-control col-sm-10" id="order_date" type="date" name="order_date" value="{{ object.order_date }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="required_date">required_date: </label>
+  <input class="form-control col-sm-10" id="required_date" type="date" name="required_date" value="{{ object.required_date }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="shipped_date">shipped_date: </label>
+  <input class="form-control col-sm-10" id="shipped_date" type="date" name="shipped_date" value="{{ object.shipped_date }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="freight">freight: </label>
+  <input class="form-control col-sm-10" id="freight" type="text" name="freight" value="{{ object.freight }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="ship_name">ship_name: </label>
+  <input class="form-control col-sm-10" id="ship_name" type="text" name="ship_name" value="{{ object.ship_name }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="ship_address">ship_address: </label>
+  <input class="form-control col-sm-10" id="ship_address" type="text" name="ship_address" value="{{ object.ship_address }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="ship_city">ship_city: </label>
+  <input class="form-control col-sm-10" id="ship_city" type="text" name="ship_city" value="{{ object.ship_city }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="ship_region">ship_region: </label>
+  <input class="form-control col-sm-10" id="ship_region" type="text" name="ship_region" value="{{ object.ship_region }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="ship_postal_code">ship_postal_code: </label>
+  <input class="form-control col-sm-10" id="ship_postal_code" type="text" name="ship_postal_code" value="{{ object.ship_postal_code }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="ship_country">ship_country: </label>
+  <input class="form-control col-sm-10" id="ship_country" type="text" name="ship_country" value="{{ object.ship_country }}">
+  </div>
+  <input type="submit" value="Save" class="btn btn-primary">
+</form>
+
+{% endblock %}

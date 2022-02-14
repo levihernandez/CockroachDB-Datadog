@@ -1,0 +1,30 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'crm_Shippers_list' %}">
+    Shippers Listing
+    </a>
+</p>
+    
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{form.errors}}
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="shipper_id">shipper_id: </label>
+  <input class="form-control col-sm-10" id="shipper_id" type="text" name="shipper_id" value="{{ object.shipper_id }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="company_name">company_name: </label>
+  <input class="form-control col-sm-10" id="company_name" type="text" name="company_name" value="{{ object.company_name }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="phone">phone: </label>
+  <input class="form-control col-sm-10" id="phone" type="text" name="phone" value="{{ object.phone }}">
+  </div>
+  <input type="submit" value="Save" class="btn btn-primary">
+</form>
+
+{% endblock %}

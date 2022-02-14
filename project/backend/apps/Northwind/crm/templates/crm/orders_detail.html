@@ -1,0 +1,27 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'crm_Orders_list' %}">
+    Orders Listing
+    </a>
+</p>
+    
+<table class="table">
+    <tr><td>order_id</td><td>{{ object.order_id }}</td></tr>
+    <tr><td>order_date</td><td>{{ object.order_date }}</td></tr>
+    <tr><td>required_date</td><td>{{ object.required_date }}</td></tr>
+    <tr><td>shipped_date</td><td>{{ object.shipped_date }}</td></tr>
+    <tr><td>freight</td><td>{{ object.freight }}</td></tr>
+    <tr><td>ship_name</td><td>{{ object.ship_name }}</td></tr>
+    <tr><td>ship_address</td><td>{{ object.ship_address }}</td></tr>
+    <tr><td>ship_city</td><td>{{ object.ship_city }}</td></tr>
+    <tr><td>ship_region</td><td>{{ object.ship_region }}</td></tr>
+    <tr><td>ship_postal_code</td><td>{{ object.ship_postal_code }}</td></tr>
+    <tr><td>ship_country</td><td>{{ object.ship_country }}</td></tr>
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">Edit</a>
+
+{% endblock %}

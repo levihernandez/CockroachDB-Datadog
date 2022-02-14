@@ -1,0 +1,68 @@
+version: "3.9"
+services:
+  northwind:
+    image: jpnoles/northwind
+    environment:
+      DATABASE_URL: "postgresql://root@192.168.86.214:26257/northwind?sslmode=disable"
+      DD_AGENT_HOST: "datadog"
+      DD_LOGS_INJECTION: "true"
+    command: ddtrace-run python manage.py runserver 0.0.0.0:3000
+    labels:
+      #com.datadoghq.ad.logs: '[{"source":"cockroachdb","service":"cockroach"}]'
+      com.datadoghq.ad.logs: '[{"source": "python", "service": "northwind","log_processing_rules": [{"type": "multi_line", "name": "log_start_with_date", "pattern" : "\[(0?[1-9]|[12][0-9]|3[01])-(0?[1-9]|1[012])-\\d{4}"}\]}]'
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    networks:
+      - nw
+
+
+
+
+  ## agent section
+  datadog:
+    #build: datadog
+    image: datadog/agent
+    # user: "dd-agent:root"
+    links:
+      - northwind
+    environment:
+      - DD_ENV=sandbox
+      - DD_API_KEY=${DD_API_KEY}
+      - DD_LOGS_ENABLED=true
+      - DD_APM_ENABLED=true
+      - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
+      - DD_PROCESS_AGENT_ENABLED=true
+      - DD_SYSTEM_PROBE_ENABLED=true
+      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+      - DD_LOGS_CONFIG_DOCKER_CONTAINER_USE_FILE=true
+    volumes:
+      # - ./monitor/datadog/system-probe.yaml:/etc/datadog-agent/system-probe.yaml:rw
+      # - ./monitor/datadog/cockroachdb.yaml:/etc/datadog-agent/conf.d/cockroachdb.d/conf.yaml:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+      - /sys/kernel/debug:/sys/kernel/debug
+    cap_add:
+      - SYS_ADMIN
+      - SYS_RESOURCE
+      - SYS_PTRACE
+      - NET_ADMIN
+      - NET_BROADCAST
+      - NET_RAW
+      - IPC_LOCK
+      - CHOWN
+    security_opt:
+      - apparmor:unconfined
+    networks:
+      - nw
+
+networks:
+  nw:
+    driver: bridge
+
+# Attach current docker container to an existing external network (like cockroachdb 'poc' network)
+#networks:
+#  cockroach-docker_poc:
+#    external: true

@@ -1,0 +1,34 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'crm_Categories_list' %}">
+    Categories Listing
+    </a>
+</p>
+    
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{form.errors}}
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="category_id">category_id: </label>
+  <input class="form-control col-sm-10" id="category_id" type="text" name="category_id" value="{{ object.category_id }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="category_name">category_name: </label>
+  <input class="form-control col-sm-10" id="category_name" type="text" name="category_name" value="{{ object.category_name }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="description">description: </label>
+  <input class="form-control col-sm-10" id="description" type="text" name="description" value="{{ object.description }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="picture">picture: </label>
+  <input class="form-control col-sm-10" id="picture" type="text" name="picture" value="{{ object.picture }}">
+  </div>
+  <input type="submit" value="Save" class="btn btn-primary">
+</form>
+
+{% endblock %}

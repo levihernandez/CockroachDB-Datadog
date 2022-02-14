@@ -1,0 +1,98 @@
+{% load static %}
+<html>
+  <head>
+    <title>Django Builder - Northwind</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+      <script
+    src="https://www.datadoghq-browser-agent.com/datadog-rum-v4.js"
+    type="text/javascript">
+</script>
+
+<script>
+    window.DD_RUM && window.DD_RUM.init({
+        applicationId: '0e32c26d-5e2b-4f80-881e-5b740b9e687f',
+        clientToken: 'pub4804f588604664b770a8615b1c873fde',
+        site: 'datadoghq.com',
+        service:'django',
+        env:'sandbox',
+        // Specify a version number to identify the deployed version of your application in Datadog
+        // version: '1.0.0',
+        sampleRate: 100,
+        trackInteractions: true,
+        defaultPrivacyLevel: 'mask-user-input',
+        allowedTracingOrigins: [ window.location.origin ]
+    });
+
+    window.DD_RUM &&
+    window.DD_RUM.startSessionReplayRecording();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script><style>
+.btn-purple{
+    background-color: #702963;
+}
+.bg-cdb{
+    background-color: #5D3FD3
+}
+.bg-dd{
+    background-color: #800080;
+}
+</style>
+  </head>
+  <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'index' %}">Northwind</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <li class="nav-item">
+
+                    <a class="nav-link active" aria-current="page" href="{% url 'crm_Products_list' %}">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'crm_Customers_list' %}">Customers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'crm_Categories_list' %}">Categories</a>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'crm_CustomerCustomerDemo_list' %}">Customer Demo
+                </a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'crm_CustomerDemographics_list' %}">Customer Demographics
+                </a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'crm_EmployeeTerritories_list' %}">Employee Territories
+                </a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'crm_Employees_list' %}">Employees </a></li>
+                <li class="nav-item"><a class="nav-link"
+                                        href="{% url 'crm_GeographyColumns_list' %}">Geography</a>
+                </li>
+                <li class="nav-item"><a class="nav-link"
+                                        href="{% url 'crm_GeometryColumns_list' %}">Geometry </a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'crm_OrderDetails_list' %}">Order Details </a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'crm_Orders_list' %}">Orders </a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'crm_Region_list' %}">Region </a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'crm_Shippers_list' %}">Shippers </a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'crm_SpatialRefSys_list' %}">Spatial RefSys </a>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'crm_Suppliers_list' %}">Suppliers </a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'crm_Territories_list' %}">Territories </a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'crm_UsStates_list' %}">States </a></li>
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+
+    <div id="content" class="container">
+
+
+      {% block content %}{% endblock %}
+    </div>
+  
+  </body>
+</html>

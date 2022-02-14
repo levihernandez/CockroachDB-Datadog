@@ -1,0 +1,38 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'crm_SpatialRefSys_list' %}">
+    SpatialRefSys Listing
+    </a>
+</p>
+    
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{form.errors}}
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="srid">srid: </label>
+  <input class="form-control col-sm-10" id="srid" type="text" name="srid" value="{{ object.srid }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="auth_name">auth_name: </label>
+  <input class="form-control col-sm-10" id="auth_name" type="text" name="auth_name" value="{{ object.auth_name }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="auth_srid">auth_srid: </label>
+  <input class="form-control col-sm-10" id="auth_srid" type="text" name="auth_srid" value="{{ object.auth_srid }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="srtext">srtext: </label>
+  <input class="form-control col-sm-10" id="srtext" type="text" name="srtext" value="{{ object.srtext }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="proj4text">proj4text: </label>
+  <input class="form-control col-sm-10" id="proj4text" type="text" name="proj4text" value="{{ object.proj4text }}">
+  </div>
+  <input type="submit" value="Save" class="btn btn-primary">
+</form>
+
+{% endblock %}

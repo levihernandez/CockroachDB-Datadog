@@ -1,0 +1,20 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'crm_UsStates_list' %}">
+    UsStates Listing
+    </a>
+</p>
+    
+<table class="table">
+    <tr><td>state_id</td><td>{{ object.state_id }}</td></tr>
+    <tr><td>state_name</td><td>{{ object.state_name }}</td></tr>
+    <tr><td>state_abbr</td><td>{{ object.state_abbr }}</td></tr>
+    <tr><td>state_region</td><td>{{ object.state_region }}</td></tr>
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">Edit</a>
+
+{% endblock %}

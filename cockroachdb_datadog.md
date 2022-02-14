@@ -84,6 +84,28 @@ The different databse package libraries are used for Django, Python, and SQL Alc
 
 **NOTE**: Whenever we see the Datadog flamegraphs, it will show two instances of a DB connection, which reflects the PostgreSQL driver and CockroachDB driver.
 
+### Datadog API Key
+
+Before we can continue with the successful database scalability and full observability, we need an account with Datadog and obtain an API key so we can send the monitoring information. Since we should not assign a hard coded key for the project, we will use environment variables to inject it to the docker-compose.yaml file as follows:
+
+> Get an [API key](https://app.datadoghq.com/account/settings#api) after signing up for a free trial at [Datadog](https://www.datadoghq.com/)
+
+```commandline
+(venv) jlhernandez $ export DD_API_KEY=<dd api key hash>
+```
+
+The excerpt for the docker-compose.yaml for Datadog looks like the example below, there are more settings listed in the file:
+
+```yaml
+  datadog:
+    image: datadog/agent
+    links:
+      - northwind
+    environment:
+      - DD_ENV=sandbox
+      - DD_API_KEY=${DD_API_KEY}
+```
+
 ### Database load script
 
 Before getting started with stress testing of the CockroachDB cluster, we will use the following Python script that emits fake requests to insert new users into the database. Here is the breakdown of what the script accomplishes:
@@ -108,14 +130,6 @@ if __name__ == '__main__':
 (venv) jlhernandez $ python project/backend/data_emulator/main.py 
 ```
 
-### Frontend: Northwind Django app
-
-```commandline
-(venv) jlhernandez $ python manage.py runserver 0:3000
-```
-
-![Northwind Django](images/northwind-django.png)
-
 ### Cockroach Labs Database Test
 
 To test the capabilities of CockroachDB, there are a few samples provided by Cockroach Labs on how to do a quick start, such as the in-memory database cluster, Kubernetes Helm chart, Docker container, and self-managed installations.
@@ -126,6 +140,14 @@ For our demo purposes, I have configured the following docker-compose.yaml file 
 > Apply database load
 > Scale up the CockroachDB cluster
 > Scale down the CockroachDB cluster
+
+### Frontend: Northwind Django app
+
+```commandline
+(venv) jlhernandez $ python manage.py runserver 0:3000
+```
+
+![Northwind Django](images/northwind-django.png)
 
 ### Datadog Monitoring Test
 

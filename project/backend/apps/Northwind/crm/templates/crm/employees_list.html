@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+
+        {% for object in object_list %}
+        <div class="col-lg-3 mb-4">
+            <div class="card-group">
+                <div class="card">
+                    <!--img class="card-img-top" src="..." alt="Card image cap"-->
+                    <div class="card-body">
+                        <h5 class="card-title">{{ object.first_name }} {{ object.last_name }}</h5>
+                        <p class="card-text">{{ object.title }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted"><a href="{{object.get_absolute_url}}"> Detail </a></small>
+                        <small class="ml-5 "> <a href="{% url 'crm_Employees_delete' object.pk %}"> Delete </a> </small>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div><a class="btn btn-primary" href="{% url 'crm_Employees_create' %}">Create a new Employees</a></div>
+{% endblock %}

@@ -1,0 +1,30 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'crm_OrderDetails_list' %}">
+    OrderDetails Listing
+    </a>
+</p>
+    
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{form.errors}}
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="unit_price">unit_price: </label>
+  <input class="form-control col-sm-10" id="unit_price" type="text" name="unit_price" value="{{ object.unit_price }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="quantity">quantity: </label>
+  <input class="form-control col-sm-10" id="quantity" type="text" name="quantity" value="{{ object.quantity }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="discount">discount: </label>
+  <input class="form-control col-sm-10" id="discount" type="text" name="discount" value="{{ object.discount }}">
+  </div>
+  <input type="submit" value="Save" class="btn btn-primary">
+</form>
+
+{% endblock %}

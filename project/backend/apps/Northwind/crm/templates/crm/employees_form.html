@@ -1,0 +1,86 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'crm_Employees_list' %}">
+    Employees Listing
+    </a>
+</p>
+    
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{form.errors}}
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="employee_id">employee_id: </label>
+  <input class="form-control col-sm-10" id="employee_id" type="text" name="employee_id" value="{{ object.employee_id }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="last_name">last_name: </label>
+  <input class="form-control col-sm-10" id="last_name" type="text" name="last_name" value="{{ object.last_name }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="first_name">first_name: </label>
+  <input class="form-control col-sm-10" id="first_name" type="text" name="first_name" value="{{ object.first_name }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="title">title: </label>
+  <input class="form-control col-sm-10" id="title" type="text" name="title" value="{{ object.title }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="title_of_courtesy">title_of_courtesy: </label>
+  <input class="form-control col-sm-10" id="title_of_courtesy" type="text" name="title_of_courtesy" value="{{ object.title_of_courtesy }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="birth_date">birth_date: </label>
+  <input class="form-control col-sm-10" id="birth_date" type="date" name="birth_date" value="{{ object.birth_date }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="hire_date">hire_date: </label>
+  <input class="form-control col-sm-10" id="hire_date" type="date" name="hire_date" value="{{ object.hire_date }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="address">address: </label>
+  <input class="form-control col-sm-10" id="address" type="text" name="address" value="{{ object.address }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="city">city: </label>
+  <input class="form-control col-sm-10" id="city" type="text" name="city" value="{{ object.city }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="region">region: </label>
+  <input class="form-control col-sm-10" id="region" type="text" name="region" value="{{ object.region }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="postal_code">postal_code: </label>
+  <input class="form-control col-sm-10" id="postal_code" type="text" name="postal_code" value="{{ object.postal_code }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="country">country: </label>
+  <input class="form-control col-sm-10" id="country" type="text" name="country" value="{{ object.country }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="home_phone">home_phone: </label>
+  <input class="form-control col-sm-10" id="home_phone" type="text" name="home_phone" value="{{ object.home_phone }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="extension">extension: </label>
+  <input class="form-control col-sm-10" id="extension" type="text" name="extension" value="{{ object.extension }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="photo">photo: </label>
+  <input class="form-control col-sm-10" id="photo" type="text" name="photo" value="{{ object.photo }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="notes">notes: </label>
+  <input class="form-control col-sm-10" id="notes" type="text" name="notes" value="{{ object.notes }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="photo_path">photo_path: </label>
+  <input class="form-control col-sm-10" id="photo_path" type="text" name="photo_path" value="{{ object.photo_path }}">
+  </div>
+  <input type="submit" value="Save" class="btn btn-primary">
+</form>
+
+{% endblock %}

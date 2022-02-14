@@ -1,0 +1,33 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'crm_Employees_list' %}">
+    Employees Listing
+    </a>
+</p>
+    
+<table class="table">
+    <tr><td>employee_id</td><td>{{ object.employee_id }}</td></tr>
+    <tr><td>last_name</td><td>{{ object.last_name }}</td></tr>
+    <tr><td>first_name</td><td>{{ object.first_name }}</td></tr>
+    <tr><td>title</td><td>{{ object.title }}</td></tr>
+    <tr><td>title_of_courtesy</td><td>{{ object.title_of_courtesy }}</td></tr>
+    <tr><td>birth_date</td><td>{{ object.birth_date }}</td></tr>
+    <tr><td>hire_date</td><td>{{ object.hire_date }}</td></tr>
+    <tr><td>address</td><td>{{ object.address }}</td></tr>
+    <tr><td>city</td><td>{{ object.city }}</td></tr>
+    <tr><td>region</td><td>{{ object.region }}</td></tr>
+    <tr><td>postal_code</td><td>{{ object.postal_code }}</td></tr>
+    <tr><td>country</td><td>{{ object.country }}</td></tr>
+    <tr><td>home_phone</td><td>{{ object.home_phone }}</td></tr>
+    <tr><td>extension</td><td>{{ object.extension }}</td></tr>
+    <tr><td>photo</td><td>{{ object.photo }}</td></tr>
+    <tr><td>notes</td><td>{{ object.notes }}</td></tr>
+    <tr><td>photo_path</td><td>{{ object.photo_path }}</td></tr>
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">Edit</a>
+
+{% endblock %}

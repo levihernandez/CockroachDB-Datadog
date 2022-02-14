@@ -1,0 +1,21 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'crm_SpatialRefSys_list' %}">
+    SpatialRefSys Listing
+    </a>
+</p>
+    
+<table class="table">
+    <tr><td>srid</td><td>{{ object.srid }}</td></tr>
+    <tr><td>auth_name</td><td>{{ object.auth_name }}</td></tr>
+    <tr><td>auth_srid</td><td>{{ object.auth_srid }}</td></tr>
+    <tr><td>srtext</td><td>{{ object.srtext }}</td></tr>
+    <tr><td>proj4text</td><td>{{ object.proj4text }}</td></tr>
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">Edit</a>
+
+{% endblock %}

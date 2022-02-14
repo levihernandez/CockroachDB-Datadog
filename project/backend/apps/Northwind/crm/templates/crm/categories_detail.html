@@ -1,0 +1,20 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'crm_Categories_list' %}">
+    Categories Listing
+    </a>
+</p>
+    
+<table class="table">
+    <tr><td>category_id</td><td>{{ object.category_id }}</td></tr>
+    <tr><td>category_name</td><td>{{ object.category_name }}</td></tr>
+    <tr><td>description</td><td>{{ object.description }}</td></tr>
+    <tr><td>picture</td><td>{{ object.picture }}</td></tr>
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">Edit</a>
+
+{% endblock %}

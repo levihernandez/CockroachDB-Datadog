@@ -1,0 +1,26 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'crm_Region_list' %}">
+    Region Listing
+    </a>
+</p>
+    
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{form.errors}}
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="region_id">region_id: </label>
+  <input class="form-control col-sm-10" id="region_id" type="text" name="region_id" value="{{ object.region_id }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="region_description">region_description: </label>
+  <input class="form-control col-sm-10" id="region_description" type="text" name="region_description" value="{{ object.region_description }}">
+  </div>
+  <input type="submit" value="Save" class="btn btn-primary">
+</form>
+
+{% endblock %}

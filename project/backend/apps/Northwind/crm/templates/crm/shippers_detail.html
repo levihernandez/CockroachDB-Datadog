@@ -1,0 +1,19 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'crm_Shippers_list' %}">
+    Shippers Listing
+    </a>
+</p>
+    
+<table class="table">
+    <tr><td>shipper_id</td><td>{{ object.shipper_id }}</td></tr>
+    <tr><td>company_name</td><td>{{ object.company_name }}</td></tr>
+    <tr><td>phone</td><td>{{ object.phone }}</td></tr>
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">Edit</a>
+
+{% endblock %}

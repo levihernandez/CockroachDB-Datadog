@@ -1,0 +1,34 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'crm_UsStates_list' %}">
+    UsStates Listing
+    </a>
+</p>
+    
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{form.errors}}
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="state_id">state_id: </label>
+  <input class="form-control col-sm-10" id="state_id" type="text" name="state_id" value="{{ object.state_id }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="state_name">state_name: </label>
+  <input class="form-control col-sm-10" id="state_name" type="text" name="state_name" value="{{ object.state_name }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="state_abbr">state_abbr: </label>
+  <input class="form-control col-sm-10" id="state_abbr" type="text" name="state_abbr" value="{{ object.state_abbr }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="state_region">state_region: </label>
+  <input class="form-control col-sm-10" id="state_region" type="text" name="state_region" value="{{ object.state_region }}">
+  </div>
+  <input type="submit" value="Save" class="btn btn-primary">
+</form>
+
+{% endblock %}

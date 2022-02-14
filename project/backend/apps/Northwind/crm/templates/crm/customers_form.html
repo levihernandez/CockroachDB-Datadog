@@ -1,0 +1,62 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'crm_Customers_list' %}">
+    Customers Listing
+    </a>
+</p>
+    
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{form.errors}}
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="customer_id">customer_id: </label>
+  <input class="form-control col-sm-10" id="customer_id" type="text" name="customer_id" value="{{ object.customer_id }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="company_name">company_name: </label>
+  <input class="form-control col-sm-10" id="company_name" type="text" name="company_name" value="{{ object.company_name }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="contact_name">contact_name: </label>
+  <input class="form-control col-sm-10" id="contact_name" type="text" name="contact_name" value="{{ object.contact_name }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="contact_title">contact_title: </label>
+  <input class="form-control col-sm-10" id="contact_title" type="text" name="contact_title" value="{{ object.contact_title }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="address">address: </label>
+  <input class="form-control col-sm-10" id="address" type="text" name="address" value="{{ object.address }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="city">city: </label>
+  <input class="form-control col-sm-10" id="city" type="text" name="city" value="{{ object.city }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="region">region: </label>
+  <input class="form-control col-sm-10" id="region" type="text" name="region" value="{{ object.region }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="postal_code">postal_code: </label>
+  <input class="form-control col-sm-10" id="postal_code" type="text" name="postal_code" value="{{ object.postal_code }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="country">country: </label>
+  <input class="form-control col-sm-10" id="country" type="text" name="country" value="{{ object.country }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="phone">phone: </label>
+  <input class="form-control col-sm-10" id="phone" type="text" name="phone" value="{{ object.phone }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="fax">fax: </label>
+  <input class="form-control col-sm-10" id="fax" type="text" name="fax" value="{{ object.fax }}">
+  </div>
+  <input type="submit" value="Save" class="btn btn-primary">
+</form>
+
+{% endblock %}

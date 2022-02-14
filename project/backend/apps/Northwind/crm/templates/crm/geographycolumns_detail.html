@@ -1,0 +1,19 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'crm_GeographyColumns_list' %}">
+    GeographyColumns Listing
+    </a>
+</p>
+    
+<table class="table">
+    <tr><td>coord_dimension</td><td>{{ object.coord_dimension }}</td></tr>
+    <tr><td>srid</td><td>{{ object.srid }}</td></tr>
+    <tr><td>type</td><td>{{ object.type }}</td></tr>
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">Edit</a>
+
+{% endblock %}

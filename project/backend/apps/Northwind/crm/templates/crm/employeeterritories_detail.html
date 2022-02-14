@@ -1,0 +1,16 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'crm_EmployeeTerritories_list' %}">
+    EmployeeTerritories Listing
+    </a>
+</p>
+    
+<table class="table">
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">Edit</a>
+
+{% endblock %}

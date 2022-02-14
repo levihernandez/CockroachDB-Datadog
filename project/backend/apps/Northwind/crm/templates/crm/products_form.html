@@ -1,0 +1,50 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'crm_Products_list' %}">
+    Products Listing
+    </a>
+</p>
+    
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{form.errors}}
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="product_id">product_id: </label>
+  <input class="form-control col-sm-10" id="product_id" type="text" name="product_id" value="{{ object.product_id }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="product_name">product_name: </label>
+  <input class="form-control col-sm-10" id="product_name" type="text" name="product_name" value="{{ object.product_name }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="quantity_per_unit">quantity_per_unit: </label>
+  <input class="form-control col-sm-10" id="quantity_per_unit" type="text" name="quantity_per_unit" value="{{ object.quantity_per_unit }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="unit_price">unit_price: </label>
+  <input class="form-control col-sm-10" id="unit_price" type="text" name="unit_price" value="{{ object.unit_price }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="units_in_stock">units_in_stock: </label>
+  <input class="form-control col-sm-10" id="units_in_stock" type="text" name="units_in_stock" value="{{ object.units_in_stock }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="units_on_order">units_on_order: </label>
+  <input class="form-control col-sm-10" id="units_on_order" type="text" name="units_on_order" value="{{ object.units_on_order }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="reorder_level">reorder_level: </label>
+  <input class="form-control col-sm-10" id="reorder_level" type="text" name="reorder_level" value="{{ object.reorder_level }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="discontinued">discontinued: </label>
+  <input class="form-control col-sm-10" id="discontinued" type="text" name="discontinued" value="{{ object.discontinued }}">
+  </div>
+  <input type="submit" value="Save" class="btn btn-primary">
+</form>
+
+{% endblock %}

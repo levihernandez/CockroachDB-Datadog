@@ -1,0 +1,30 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'crm_GeometryColumns_list' %}">
+    GeometryColumns Listing
+    </a>
+</p>
+    
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{form.errors}}
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="coord_dimension">coord_dimension: </label>
+  <input class="form-control col-sm-10" id="coord_dimension" type="text" name="coord_dimension" value="{{ object.coord_dimension }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="srid">srid: </label>
+  <input class="form-control col-sm-10" id="srid" type="text" name="srid" value="{{ object.srid }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="type">type: </label>
+  <input class="form-control col-sm-10" id="type" type="text" name="type" value="{{ object.type }}">
+  </div>
+  <input type="submit" value="Save" class="btn btn-primary">
+</form>
+
+{% endblock %}

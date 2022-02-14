@@ -1,0 +1,19 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'crm_OrderDetails_list' %}">
+    OrderDetails Listing
+    </a>
+</p>
+    
+<table class="table">
+    <tr><td>unit_price</td><td>{{ object.unit_price }}</td></tr>
+    <tr><td>quantity</td><td>{{ object.quantity }}</td></tr>
+    <tr><td>discount</td><td>{{ object.discount }}</td></tr>
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">Edit</a>
+
+{% endblock %}

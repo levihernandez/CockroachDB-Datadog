@@ -32,6 +32,7 @@ Datadog's main concept is unification of monitored data to present an observabil
 
 **The Why: [Modern monitoring & Security](https://www.datadoghq.com/)**
 
+* Golden Signals & RED metrics for the entire ecosystem
 * One agent install with multiple tools
   * CPU usage < 1% overall
   * eBPF event monitoring
@@ -171,6 +172,9 @@ export NODE=node_5; export JOIN=master,node_1,node_2,node_3,node_4,${NODE}; dock
 export NODE=node_2; export JOIN=master,node_1,${NODE}; docker-compose scale node=2
 ```
 
+> Datadog notification when nodes fall
+![DD Notification](images/dd-alert-crdb-nodes.png)
+
 The approach taken with docker-compose is for testing purposes and are not fit for a production workload.
 
 > CockroachDB Console Metrics
@@ -230,6 +234,14 @@ root@localhost:26257/defaultdb> quit
 The objective of achieving full observability with Datadog are to ensure all data points are in a single context with correlated tags. The time to value is obtained by integrating Datadog with CockroachDB and obtain metrics from the database as well as the architecture in which it runs.
 
 Within the Datadob platform, any CockroachDB user should be able to quickly understand the performance of the database, the elastic scalability as loads need to grow or decrease, and obtain ML analysis when a node dies, patterns are anomalous, and finally reduce false alert notifications. The core data obtained by Datadog ranges from Host & DB Logs, Network flow, Infra metrics, Live process, Database metrics, App traces for a 360 degree observability and single pane of glass.
+
+The monitoring information we need as the cluster scales up or down are:
+
+* Number of nodes alive
+* Alerts produce during the change of node state
+* Database performance throughout the process
+* Query performance during load and app transactions
+* Quick time to detection with the Database and surrounding ecosystem (apps, infra, memory, cpu, network, etc.)
 
 > Tracing Django application + CockroachDB calls with Datadog APM
 

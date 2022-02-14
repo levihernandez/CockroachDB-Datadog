@@ -60,8 +60,8 @@ To test the database cluster, we will use scripted data load, a Django interface
 * [Northwind](https://github.com/pthom/northwind_psql) SQL data set only for Django makemigrations.
 * [Django Builder](https://djangobuilder.io/#/), to import the modules.py and generate the View and forms.
 * [Postman Collection Runner](https://learning.postman.com/docs/running-collections/intro-to-collection-runs/)
-* CockroachDB Docker Image
-* Datadog Docker Image `datadog/agent`
+* CockroachDB Docker Image [`cockroachdb/cockroach`](https://hub.docker.com/r/cockroachdb/cockroach)
+* Datadog Docker Image [`datadog/agent`](https://hub.docker.com/r/datadog/agent)
 * Datadog APM Python Library: [`ddtrace`](https://pypi.org/project/ddtrace/)
 
 > Python packages

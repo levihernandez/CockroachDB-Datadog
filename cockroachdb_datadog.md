@@ -102,6 +102,12 @@ if __name__ == '__main__':
     schedule.every(1).minutes.do(purchases, args=[10000, db_uri])
 ```
 
+> Execute the scheduled workload to insert DB records from 1 to 10K records per minute.
+
+```commandline
+(venv) jlhernandez $ python project/backend/data_emulator/main.py 
+```
+
 ### Frontend: Northwind Django app
 
 ```commandline
@@ -123,15 +129,6 @@ For our demo purposes, I have configured the following docker-compose.yaml file 
 
 ### Datadog Monitoring Test
 
+> Tracing Django application + CockroachDB calls with Datadog APM
 
-
-## Sources:
-
-* []()
-* []()
-* []()
-* []()
-* []()
-* []()
-* []()
-* []()
+![CRDB+DD+Django Tracing](images/crdb_dd-flamegraph.png) 

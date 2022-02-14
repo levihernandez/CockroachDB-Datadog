@@ -108,7 +108,7 @@ if __name__ == '__main__':
 (venv) jlhernandez $ python manage.py runserver 0:3000
 ```
 
-![Northwind Django]('images/northwind-django.png')
+![Northwind Django](images/northwind-django.png)
 
 ### Cockroach Labs Database Test
 

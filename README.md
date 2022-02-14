@@ -14,3 +14,7 @@ The current project details is located under the [`cockroachdb_datadog.md`](cock
   * Django App: [http://localhost:3000/](http://localhost:3000/)
   * Django REST API: [http://localhost:3000/crm/api/v1/](http://localhost:3000/crm/api/v1/)
   * CockroachDB: [http://localhost:8080/](http://localhost:8080/)
+
+## Overview
+
+![](images/crdb_dd.png)

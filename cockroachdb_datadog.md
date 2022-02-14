@@ -149,11 +149,11 @@ For our demo purposes, I have configured the following docker-compose.yaml file 
 ```commandline
 export NODE=node_1; export JOIN=master,${NODE}; docker-compose --verbose up
 ```
-> Apply database load
+> Apply a database load via the Python emulator
 ```commandline
 (venv) jlhernandez $ python project/backend/data_emulator/main.py 
 ```
-> Appli database load via API with Postman
+> Apply a database load via API with Postman
 ![Postman API](images/postman-api.png)
 > Scale up the CockroachDB cluster to 5 nodes
 ```commandline
